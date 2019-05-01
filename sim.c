@@ -15,7 +15,7 @@ typedef struct
 /* this is the main test program. This simulates changing the switches for setting the bus
 to certain values. Changing the data in here will change how it executes */
 unsigned char test_program[] = {
-	/* OR 0x1 (0001) with 0x8 (1000) (should equal 1001 / 0x9) */
+	/* AND 0x1 (0001) with 0x8 (1000) (should equal 1001 / 0x9) */
 	0x4,
 	0x1,
 	0x8,
@@ -27,8 +27,8 @@ unsigned char test_program[] = {
 	0xa,
 	0x7,
 	0x9,
-	/* AND 0x1 (0001) with 0xb (1011) (should equal 0001 / 0x1) */
-	0x4,
+	/* OR 0x1 (0001) with 0xb (1011) (should equal 0001 / 0x1) */
+	0x6,
 	0x1,
 	0xb
 };
@@ -129,10 +129,10 @@ void cpu_execute(cpu_t *cpu)
 			switch(cpu->reg_opcode)
 			{
 				case 4: /* bitwise OR operand A with operand B */
-					cpu->reg_result = cpu->reg_operand_a | cpu->reg_operand_b;
+					cpu->reg_result = cpu->reg_operand_a & cpu->reg_operand_b;
 				break;
 				case 6: /* bitwise AND operand A with operand B */
-					cpu->reg_result = cpu->reg_operand_a & cpu->reg_operand_b;
+					cpu->reg_result = cpu->reg_operand_a | cpu->reg_operand_b;
 				break;
 				case 7: /* bitwise XOR operand A with operand B */
 					cpu->reg_result = cpu->reg_operand_a ^ cpu->reg_operand_b;
